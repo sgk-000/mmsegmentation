@@ -1,0 +1,1 @@
+python3 ../video_demo.py --video /home/digital/sgk/data/tsukuba/tsukuba_road.MOV --config /home/digital/sgk/deep/sem-seg/mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r50-d8_769x769_40k_cityscapes.py --checkpoint /home/digital/sgk/data/tsukuba/working/outputs/deeplabv3plus/40k/lr_0.01/power_0.9/iter_40000.pth --show --img_x 480 --img_y 480

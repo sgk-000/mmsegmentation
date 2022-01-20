@@ -1,16 +1,9 @@
-_base_ = '/home/aad13694zb/mmsegmentation/configs/ocrnet/ocrnet_hr48_512x1024_80k_cityscapes.py'
+_base_ = '/home/digital/mmsegmentation/configs/ocrnet/ocrnet_hr48_512x1024_80k_cityscapes.py'
 
+dataset_type = 'TsukubaCityScapesDataset'
+data_root = "/home/digital/sgk/data/tsukuba/working"
 
-# Since we use ony one GPU, BN is used instead of SyncBN
-# cfg.norm_cfg = dict(type='BN', requires_grad=True)
-# cfg.model.backbone.norm_cfg = cfg.norm_cfg
-# cfg.model.decode_head.norm_cfg = cfg.norm_cfg
-# cfg.model.auxiliary_head.norm_cfg = cfg.norm_cfg
-
-dataset_type = 'CarlaCityScapesDataset'
-data_root = "/home/aad13694zb/carla-semantic-segmentation/working"
-
-work_dir="/home/aad13694zb/carla-semantic-segmentation/working/outputs/ocrnet_hrnet"
+work_dir="/home/digital/sgk/data/tsukuba/working/outputs/ocrnet/40k/lr_0.01/power_0.6"
 
 data = dict(
     samples_per_gpu=2,
@@ -18,7 +11,7 @@ data = dict(
     train=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir="img",
+        img_dir="imgs",
         ann_dir="labels",
         split='splits/train.txt',
         # pipeline=train_pipeline
@@ -26,7 +19,7 @@ data = dict(
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir="img",
+        img_dir="imgs",
         ann_dir="labels",
         split='splits/val.txt',
         # pipeline=train_pipeline
@@ -34,26 +27,20 @@ data = dict(
     test=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir="img",
+        img_dir="imgs",
         ann_dir="labels",
         split='splits/val.txt',
         # pipeline=train_pipeline
         ))
 
+
 # model = dict(
-#     decode_head=[
-#     dict(
-#         type='FCNHead',
-#         in_channels=[48, 96, 192, 384],
-#         channels=sum([48, 96, 192, 384]),
+#     decode_head=dict(
 #         num_classes=15
 #     ),
-#     dict(
-#         type='OCRHead',
-#         in_channels=[48, 96, 192, 384],
-#         channels=sum([48, 96, 192, 384]),
+#     auxiliary_head = dict(
 #         num_classes=15
-#     )]
+#     )
 # )
 
 checkpoint_config = dict(
@@ -61,11 +48,13 @@ checkpoint_config = dict(
 )
 
 optimizer = dict(
-    lr=0.15
+    lr=0.01
 )
 
+runner = dict(type='IterBasedRunner', max_iters=80000)
+
 lr_config = dict(
-    power=0.5
+    power=0.6
 )
 
 log_config = dict(

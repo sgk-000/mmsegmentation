@@ -16,6 +16,7 @@ from .isa_head import ISAHead
 from .lraspp_head import LRASPPHead
 from .nl_head import NLHead
 from .ocr_head import OCRHead
+from .ocr_head_no_cls import OCRHeadNoCls
 from .point_head import PointHead
 from .psa_head import PSAHead
 from .psp_head import PSPHead
@@ -29,7 +30,7 @@ from .uper_head import UPerHead
 
 __all__ = [
     'FCNHead', 'PSPHead', 'ASPPHead', 'PSAHead', 'NLHead', 'GCHead', 'CCHead',
-    'UPerHead', 'DepthwiseSeparableASPPHead', 'ANNHead', 'DAHead', 'OCRHead',
+    'UPerHead', 'DepthwiseSeparableASPPHead', 'ANNHead', 'DAHead', 'OCRHead','OCRHeadNoCls',
     'EncHead', 'DepthwiseSeparableFCNHead', 'FPNHead', 'EMAHead', 'DNLHead',
     'PointHead', 'APCHead', 'DMHead', 'LRASPPHead', 'SETRUPHead',
     'SETRMLAHead', 'DPTHead', 'SETRMLAHead', 'SegformerHead', 'ISAHead',

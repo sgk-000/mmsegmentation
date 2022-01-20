@@ -216,7 +216,7 @@ class BaseDecodeHead(BaseModule, metaclass=ABCMeta):
                 `mmseg/datasets/pipelines/formatting.py:Collect`.
             test_cfg (dict): The testing config.
 
-        Returns:
+        Returns: 
             Tensor: Output segmentation map.
         """
         return self.forward(inputs)

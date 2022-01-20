@@ -1,0 +1,33 @@
+<launch>
+
+    <arg name='rgb_input' default='/videofile/image_raw' />
+    <arg name='publish_rate' default='10' />
+    <arg name='visualize' default='True' />
+    <arg name='config' default='/home/digital/mmsegmentation/configs/ocrnet/tsukuba/ocrnet_hr48_512x1024_80k_cityscapes_config.py' />
+    <arg name='checkpoint' default='/home/digital/sgk/data/tsukuba/working/outputs/ocrnet/40k/lr_0.01/power_0.6/iter_80000.pth' />
+    <arg name='device' default='cuda:0' />
+    <arg name='pallete' default='cityscapes' />
+    <arg name='input_height' default='480' />
+    <arg name='input_width' default='480' />
+    <arg name='output_height' default='480' />
+    <arg name='output_width' default='480' />
+    <arg name='opacity' default='0.5' />
+
+
+    <node pkg="mmseg_ros" type="mmseg_ros.py" name="mmseg_ros" output="screen">
+        <param name="rgb_input" value="$(arg rgb_input)" />
+        <param name="publish_rate" value="$(arg publish_rate)" />
+        <param name="visualize" value="$(arg visualize)" />
+        <param name="config" value="$(arg config)" />
+        <param name="checkpoint" value="$(arg checkpoint)" />
+        <param name="device" value="$(arg device)" />
+        <param name="pallete" value="$(arg pallete)" />
+        <param name="input_height" value="$(arg input_height)" />
+        <param name="input_width" value="$(arg input_width)" />
+        <param name="input_height" value="$(arg input_height)" />
+        <param name="input_width" value="$(arg input_width)" />
+        <param name="opacity" value="$(arg opacity)" />
+    </node>
+
+    <include file="$(find mmseg_ros)/launch/video.launch" />
+</launch>

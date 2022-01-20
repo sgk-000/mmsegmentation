@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/digital/mmsegmentation/ros_ws/devel/.private/mmseg_ros/setup.sh

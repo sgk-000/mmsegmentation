@@ -1,0 +1,1 @@
+/home/digital/mmsegmentation/ros_ws/devel/.private/mmseg_ros/share/mmseg_ros/cmake/mmseg_rosConfig-version.cmake

@@ -34,6 +34,7 @@ class BaseCascadeDecodeHead(BaseDecodeHead, metaclass=ABCMeta):
         Returns:
             dict[str, Tensor]: a dictionary of loss components
         """
+        print(img_metas)
         seg_logits = self.forward(inputs, prev_output)
         losses = self.losses(seg_logits, gt_semantic_seg)
 

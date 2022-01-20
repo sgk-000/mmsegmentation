@@ -1,0 +1,1 @@
+python3 /home/digital/mmsegmentation/demo/video_demo.py /home/digital/sgk/data/tsukuba/center.mp4 /home/digital/mmsegmentation/configs/ocrnet/tsukuba/ocrnet_hr48_512x1024_80k_cityscapes_config.py /home/digital/sgk/data/tsukuba/working/outputs/ocrnet/40k/lr_0.01/power_0.6/iter_80000.pth --show --save --input-width 480 --input-height 480

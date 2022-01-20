@@ -1,6 +1,5 @@
-from argparse import ArgumentParser
-
 import cv2
+from argparse import ArgumentParser
 
 from mmseg.apis import inference_segmentor, init_segmentor
 from mmseg.core.evaluation import get_palette
@@ -20,6 +19,8 @@ def main():
     parser.add_argument(
         '--show', action='store_true', help='Whether to show draw result')
     parser.add_argument(
+        '--save', action='store_true', help='Whether to save draw result')
+    parser.add_argument(
         '--show-wait-time', default=1, type=int, help='Wait time after imshow')
     parser.add_argument(
         '--output-file', default=None, type=str, help='Output video file path')
@@ -30,6 +31,16 @@ def main():
         help='Fourcc of the output video')
     parser.add_argument(
         '--output-fps', default=-1, type=int, help='FPS of the output video')
+    parser.add_argument(
+        '--input-height',
+        default=-1,
+        type=int,
+        help='Frame height of the input video')
+    parser.add_argument(
+        '--input-width',
+        default=-1,
+        type=int,
+        help='Frame width of the input video')
     parser.add_argument(
         '--output-height',
         default=-1,
@@ -53,6 +64,23 @@ def main():
     # build the model from a config file and a checkpoint file
     model = init_segmentor(args.config, args.checkpoint, device=args.device)
 
+    palette = [
+        [0, 0, 0],
+        [128, 64, 128],
+        [244, 35, 232],
+        [70, 70, 70],
+        [153, 153, 153],
+        [107, 142, 35],
+        [152, 251, 152],
+        [70, 130, 180],
+        [220, 20, 60],
+        [0, 0, 142],
+        [119, 11, 32],
+        [0, 0, 230],
+        [250, 170, 30],
+        [220, 220, 0],
+    ]
+
     # build input video
     cap = cv2.VideoCapture(args.video)
     assert (cap.isOpened())
@@ -75,6 +103,7 @@ def main():
                                  (output_width, output_height), True)
 
     # start looping
+    count = 0
     try:
         while True:
             flag, frame = cap.read()
@@ -82,17 +111,23 @@ def main():
                 break
 
             # test a single image
+            frame = cv2.resize(frame, (args.input_width, args.input_height))
             result = inference_segmentor(model, frame)
 
             # blend raw image and prediction
             draw_img = model.show_result(
                 frame,
                 result,
-                palette=get_palette(args.palette),
+                palette=palette,
                 show=False,
                 opacity=args.opacity)
 
+            if args.save:
+                count += 1                
+                cv2.imwrite('/tmp/images/image{:0=4}.jpg'.format(count), draw_img)
+
             if args.show:
+                cv2.namedWindow("video_demo", cv2.WINDOW_NORMAL)
                 cv2.imshow('video_demo', draw_img)
                 cv2.waitKey(args.show_wait_time)
             if writer:
